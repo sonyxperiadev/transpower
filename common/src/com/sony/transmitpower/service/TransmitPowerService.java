@@ -28,8 +28,7 @@ public final class TransmitPowerService extends Service {
         super.onCreate();
 
         // run for owner only
-        if (!Process.myUserHandle().isOwner()) {
-            if (Util.DEBUG) Util.logd(TAG, "not created, not owner");
+        if (Process.myUserHandle() != UserHandle.SYSTEM) {
             return;
         }
 
