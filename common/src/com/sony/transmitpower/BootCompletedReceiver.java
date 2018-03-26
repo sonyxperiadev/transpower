@@ -55,7 +55,8 @@ public final class BootCompletedReceiver extends BroadcastReceiver {
         }
 
         final String action = intent.getAction();
-        if (!Intent.ACTION_BOOT_COMPLETED.equals(action)) {
+        if (!Intent.ACTION_BOOT_COMPLETED.equals(action)
+                && !Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(action)) {
             Util.logw(TAG , "Boot completed receiver unknown action: " + action);
             return;
         }
