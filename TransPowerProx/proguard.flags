@@ -1,0 +1,4 @@
+-verbose
+-keep class com.sony.transmitpower.sensor.FeatureIntentReceiver {
+      *;
+}
