@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Licensed under the LICENSE.
+    Copyright 2017, Sony Mobile Communications Inc.
+-->
+<resources>
+  <string name="label">TransmitPower</string>
+  <string name="permission_desc">Permission to receive TransmitPower feature intents</string>
+  <string name="permission_label">TransmitPower Feature Permission</string>
+</resources>

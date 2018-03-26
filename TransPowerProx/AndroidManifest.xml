@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Licensed under the LICENSE.
+    Copyright 2017, Sony Mobile Communications Inc.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sony.transmitpower"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.phone">
+
+    <uses-sdk android:minSdkVersion="23"
+              android:targetSdkVersion="23"/>
+
+    <uses-feature android:name="android.hardware.sensor.proximity" />
+
+    <permission
+        android:description="@string/permission_desc"
+        android:label="@string/permission_label"
+        android:name="com.sony.transmitpower.permission.FEATURE"
+        android:protectionLevel="signature" />
+    <protected-broadcast android:name="com.sony.transmitpower.intent.action.FEATURE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CONTROL_INCALL_EXPERIENCE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.sony.transmitpower.permission.FEATURE"/>
+
+    <application
+        android:label="@string/label"
+        android:process="com.android.phone"
+        android:requiredAccountType="*"
+        android:allowBackup="false"
+        android:allowClearUserData="false">
+
+        <receiver android:name=".BootCompletedReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".sensor.FeatureIntentReceiver"
+                  android:exported="false"
+                  android:permission="com.sony.transmitpower.permission.FEATURE">
+            <intent-filter>
+                <action android:name="com.sony.transmitpower.intent.action.FEATURE" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".service.TransmitPowerService"
+                 android:exported="false"/>
+
+        <service android:name=".service.InCallObserverService"
+                 android:permission="android.permission.BIND_INCALL_SERVICE" >
+            <intent-filter>
+                <action android:name="android.telecom.InCallService"/>
+            </intent-filter>
+        </service>
+
+    </application>
+</manifest>
