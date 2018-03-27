@@ -16,7 +16,9 @@ import com.sony.transmitpower.util.OemPowerConsts;
 //import com.sony.transmitpower.util.Util;
 
 /**
- * TODO
+ * SensorFeature implements the feature plugin. Initializes an
+ * accelerometer and a proximity sensor and adds them to the pool of
+ * observers. (Cleans up after itself.)
  */
 public final class SensorFeature implements IFeature {
     //private static final String TAG = SensorFeature.class.getCanonicalName();

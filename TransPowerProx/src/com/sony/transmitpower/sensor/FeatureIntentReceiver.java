@@ -12,7 +12,9 @@ import com.sony.transmitpower.util.TransmitPowerConsts;
 import com.sony.transmitpower.util.Util;
 
 /**
- * TODO
+ * FeatureIntentReceiver instantiates and initializes a {@see
+ * SensorFeature} plugable component upon receiving a {@see
+ * TransmitPowerConsts.ACTION_FEATURE} intent.
  */
 public final class FeatureIntentReceiver extends BroadcastReceiver {
     private static final String TAG = FeatureIntentReceiver.class.getCanonicalName();

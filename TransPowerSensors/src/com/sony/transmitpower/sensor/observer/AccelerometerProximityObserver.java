@@ -10,11 +10,11 @@ import com.sony.transmitpower.sensor.Proximity;
 import com.sony.transmitpower.util.Util;
 
 /**
- * Observer which reports changes in device states influenced
- * by accelerometer, i.e. movement of device indicating that
- * it might be close to the user. Also, stop listening to
- * accelerometer if proximity sensor has indicated device is
- * NEAR an object.
+ * AccelerometerProximityObserver is an observer which reports changes
+ * in device states influenced by accelerometer, i.e. movement of
+ * device indicating that it might be close to the user. Also, stop
+ * listening to accelerometer if proximity sensor has indicated device
+ * is NEAR an object.
  */
 public final class AccelerometerProximityObserver
         extends AccelerometerObserver
