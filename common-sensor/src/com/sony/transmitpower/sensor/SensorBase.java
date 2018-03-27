@@ -12,9 +12,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 /**
- * Class that implements acquisition of proximity data
- * from the proximity sensor (Sensor.TYPE_PROXIMITY)
- * via SensorManager using a SensorEventListener.
+ * SensorBase is a base class for sensors. It holds the sensor itself,
+ * its type, the manager with which to handle it and whether or not there
+ * is a listener listening to it. It implements a common initialization
+ * and cleanup routines. Necessary event handlers should be implemented
+ * by derived classes.
  */
 public class SensorBase implements SensorEventListener {
     //private static final String TAG = SensorBase.class.getCanonicalName();
