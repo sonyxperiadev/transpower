@@ -66,6 +66,13 @@ Implements accelerometer functionality.
 ##### * libprox
 Implements observation of proximity sensor.
 
+### app versioning
+Beginning with versions 1.1.0 and 2.1.0, apps will follow semantic versioning scheme.
+- *Version name* x.y.z describes the following: x = major build, y = minor build and z = patch.
+- *Version code* is an integer created out of x.y.z by:
+  - n & xF0000000 + 1 = x
+  - n & x0FFF0000 = y
+  - n & x0000FFFF = z
 
 ## LICENSE
 The project is licensed under the license stated in the LICENSE file of this project.
