@@ -63,10 +63,16 @@ Contains definitions of common functions of sensor observers.
 ##### * libacc
 Implements accelerometer functionality.
 
+##### * libpower
+Implements communication protocol using OEMHOOK API, by which modem is
+informed about environment states, such as network or sensors, so that
+it can make a decision on whether to reduce the power or not.
+
 ##### * libprox
 Implements observation of proximity sensor.
 
 ### app versioning
+
 Beginning with versions 1.1.0 and 2.1.0, apps will follow semantic versioning scheme.
 - *Version name* x.y.z describes the following: x = major build, y = minor build and z = patch.
 - *Version code* is an integer created out of x.y.z by:
