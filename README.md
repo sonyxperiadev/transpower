@@ -75,8 +75,8 @@ Implements observation of proximity sensor.
 Beginning with versions 1.1.0 and 2.1.0, apps will follow semantic versioning scheme.
 - *Version name* x.y.z describes the following: x = major build, y = minor build and z = patch.
 - *Version code* is an integer created out of x.y.z by:
-  - n & xF0000000 + 1 = x
-  - n & x0FFF0000 = y
+  - ((n & xF0000000) >> 28) + 1 = x
+  - (n & x0FFF0000) >> 16 = y
   - n & x0000FFFF = z
 
 ## LICENSE
