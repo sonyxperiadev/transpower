@@ -1,5 +1,9 @@
 # Release Notes
 
+## v2.1.1
+    - TransPowerBase build fixed
+      (other apps follow versioning for continuation)
+
 ## v2.1.0
     - libpower dependency added
     - updated doc
