@@ -20,7 +20,17 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     libacc \
     libpower
 
+hidden_api_major_vers := 28
+ifneq ($(call math_gt_or_eq, $(PLATFORM_SDK_VERSION), $(hidden_api_major_vers)),)
+    LOCAL_JAVA_LIBRARIES += telephony-common
+    LOCAL_USE_AAPT2 := true
+endif
+
 LOCAL_AAPT_FLAGS := --auto-add-overlay
+ifneq ($(call math_gt_or_eq, $(PLATFORM_SDK_VERSION), $(hidden_api_major_vers)),)
+	LOCAL_AAPT_FLAGS += \
+		--extra-packages com.sony.transmitpower.sensor
+endif
 
 # proguard:
 #LOCAL_PROGUARD_ENABLED := disabled
