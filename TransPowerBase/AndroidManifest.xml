@@ -5,8 +5,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sony.transmitpower"
-    android:versionCode="268500993"
-    android:versionName="2.1.1"
+    android:versionCode="268566529"
+    android:versionName="2.2.1"
     android:sharedUserId="android.uid.phone">
 
     <uses-sdk android:minSdkVersion="24"

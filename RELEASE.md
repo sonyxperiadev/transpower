@@ -1,5 +1,8 @@
 # Release Notes
 
+## v2.2.1
+    - supported Android version 9.0.0_r1
+
 ## v2.1.1
     - TransPowerBase build fixed
       (other apps follow versioning for continuation)
