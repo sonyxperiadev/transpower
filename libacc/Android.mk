@@ -5,6 +5,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := libacc
 LOCAL_MODULE_TAGS := optional
+LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
