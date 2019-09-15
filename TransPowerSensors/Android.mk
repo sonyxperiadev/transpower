@@ -9,7 +9,9 @@ LOCAL_PRIVILEGED_MODULE := true
 LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_PRIVATE_PLATFORM_APIS := true
+ifneq ($(shell echo "$(PLATFORM_SDK_VERSION)" ),$(shell echo "$(PRODUCT_SHIPPING_API_LEVEL)" ))
+    LOCAL_PRIVATE_PLATFORM_APIS := true
+endif
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
