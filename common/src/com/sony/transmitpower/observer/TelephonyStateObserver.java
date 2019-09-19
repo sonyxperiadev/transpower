@@ -49,8 +49,7 @@ public final class TelephonyStateObserver {
             throw new IllegalArgumentException("null context supplied.");
         }
 
-        mTelephonyManager = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
+        mTelephonyManager = TelephonyManager.from(context);
         mSubscriptionManager = SubscriptionManager.from(context);
         mSubscriptionManager.addOnSubscriptionsChangedListener(mSubscriptionListener);
     }
@@ -59,7 +58,7 @@ public final class TelephonyStateObserver {
         mListeners.clear();
         mSubscriptionManager.removeOnSubscriptionsChangedListener(mSubscriptionListener);
         for (PhoneStateListenerImpl listener : mPhoneStateListeners) {
-            mTelephonyManager.listen(listener, PhoneStateListener.LISTEN_NONE);
+            listener.listen(PhoneStateListener.LISTEN_NONE);
         }
         mPhoneStateListeners.clear();
     }
@@ -94,8 +93,7 @@ public final class TelephonyStateObserver {
             throw new IllegalArgumentException("null context supplied");
         }
 
-        final TelephonyManager tm = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
+        final TelephonyManager tm = TelephonyManager.from(context);
         if (tm == null) {
             throw new IllegalStateException("TelephonyManager is null");
         }
@@ -108,8 +106,16 @@ public final class TelephonyStateObserver {
 
     // for each SIM:
     private final class PhoneStateListenerImpl extends PhoneStateListener {
-        PhoneStateListenerImpl(int subId) {
-            super(subId);
+        // Keep track of the relevant manager (bound to subId) for deregistration purposes.
+        private final TelephonyManager mTelephonyManager;
+
+        PhoneStateListenerImpl(TelephonyManager manager) {
+            super();
+            mTelephonyManager = manager;
+        }
+
+        void listen(int events) {
+            mTelephonyManager.listen(this, events);
         }
 
         @Override
@@ -150,7 +156,7 @@ public final class TelephonyStateObserver {
                     // Reset listeners because onSubscriptionsChanged()
                     // is called multiple times.
                     for (PhoneStateListenerImpl listener : mPhoneStateListeners) {
-                        mTelephonyManager.listen(listener, PhoneStateListener.LISTEN_NONE);
+                        listener.listen(PhoneStateListener.LISTEN_NONE);
                     }
                     mPhoneStateListeners.clear();
 
@@ -158,8 +164,8 @@ public final class TelephonyStateObserver {
                     final List<SubscriptionInfo> subInfos = mSubscriptionManager
                             .getActiveSubscriptionInfoList();
                     if (subInfos == null || subInfos.isEmpty()) {
-                        mPhoneStateListeners.add(new PhoneStateListenerImpl(
-                                SubscriptionManager.DEFAULT_SUBSCRIPTION_ID));
+                        // Create a listener for the default telephony manager:
+                        mPhoneStateListeners.add(new PhoneStateListenerImpl(mTelephonyManager));
 
                         if (Util.DEBUG) {
                             Util.logd(TAG,
@@ -169,7 +175,9 @@ public final class TelephonyStateObserver {
                     } else {
                         for (SubscriptionInfo info : subInfos) {
                             final int subId = info.getSubscriptionId();
-                            mPhoneStateListeners.add(new PhoneStateListenerImpl(subId));
+                            final TelephonyManager managerForSubId
+                                    = mTelephonyManager.createForSubscriptionId(subId);
+                            mPhoneStateListeners.add(new PhoneStateListenerImpl(managerForSubId));
 
                             if (Util.DEBUG) {
                                 Util.logd(TAG, "onSubscriptionsChanged() : subId = "
@@ -180,9 +188,8 @@ public final class TelephonyStateObserver {
 
                     // Register listeners to TelephonyManager
                     for (PhoneStateListenerImpl listener : mPhoneStateListeners) {
-                        mTelephonyManager.listen(listener,
-                                PhoneStateListener.LISTEN_SERVICE_STATE
-                                | PhoneStateListener.LISTEN_DATA_ACTIVITY);
+                        listener.listen(PhoneStateListener.LISTEN_SERVICE_STATE
+                                        | PhoneStateListener.LISTEN_DATA_ACTIVITY);
                     }
                 }
             };
