@@ -6,8 +6,7 @@ package com.sony.transmitpower;
 
 import android.util.Log;
 
-import com.android.internal.telephony.Phone;
-import com.android.internal.telephony.PhoneFactory;
+import android.telephony.TelephonyManager;
 
 import com.sony.transmitpower.util.OemPowerConsts;
 
@@ -26,22 +25,13 @@ public final class Transmitter {
             return;
         }
 
-        Phone phone = null;
-        try {
-            phone = PhoneFactory.getDefaultPhone();
-        } catch (IllegalStateException ex) {
-            Log.w(TAG, "getDefaultPhone exception: " + ex);
-            return;
-        }
-        if (phone == null) {
-            Log.w(TAG, "No default phone");
-            return;
-        }
+        final TelephonyManager telephonyManager = TelephonyManager.getDefault();
+        if (telephonyManager == null)
+            throw new IllegalStateException("No default telephonyManager");
 
-        byte[] request = new byte[OemPowerConsts.HEADER_SIZE
-                                  + OemPowerConsts.INT_SIZE
-                                  + OemPowerConsts.INT_SIZE];
-        ByteBuffer buf = ByteBuffer.wrap(request);
+        ByteBuffer buf = ByteBuffer.allocate(OemPowerConsts.HEADER_SIZE
+                                             + OemPowerConsts.INT_SIZE
+                                             + OemPowerConsts.INT_SIZE);
         buf.order(ByteOrder.nativeOrder());
 
         try {
@@ -59,11 +49,11 @@ public final class Transmitter {
         buf.putInt(key);
         buf.putInt(value);
 
-        try {
-            phone.invokeOemRilRequestRaw(request, null);
-        } catch (IllegalStateException e) {
-            Log.e(TAG, "OEM request exception: " + e);
-        }
+        // tm calls this through on the ITelephony service
+        byte[] resp = new byte[1024];
+        int ret = telephonyManager.invokeOemRilRequestRaw(buf.array(), resp);
+        if (ret < 0)
+            throw new IllegalArgumentException("invokeOemRilRequestRaw failed with rc = " + ret);
     }
 
     private static boolean validate(final int key, final int value) {
