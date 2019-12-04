@@ -11,6 +11,4 @@ LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
-LOCAL_JAVA_LIBRARIES += telephony-common
-
 include $(BUILD_STATIC_JAVA_LIBRARY)
