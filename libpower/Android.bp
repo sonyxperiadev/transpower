@@ -4,7 +4,7 @@
 java_library {
     name: "transpower_libpower",
 
-    platform_apis: true,
+    sdk_version: "system_current",
     proprietary: true,
 
     srcs: ["src/**/*.java"],

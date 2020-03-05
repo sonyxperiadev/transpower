@@ -4,7 +4,7 @@
 java_library {
     name: "TransPowerCommonSensor",
 
-    platform_apis: true,
+    sdk_version: "system_current",
     proprietary: true,
 
     srcs: ["src/**/*.java"],

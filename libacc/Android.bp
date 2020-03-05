@@ -4,6 +4,7 @@
 android_library {
     name: "transpower_libacc",
 
+    sdk_version: "system_current",
     proprietary: true,
 
     srcs: ["src/**/*.java"],
