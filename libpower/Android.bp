@@ -8,4 +8,6 @@ java_library {
     proprietary: true,
 
     srcs: ["src/**/*.java"],
+
+    static_libs: ["HookMediator_aidl-java"],
 }

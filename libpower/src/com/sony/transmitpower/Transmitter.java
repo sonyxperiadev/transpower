@@ -4,60 +4,76 @@
  */
 package com.sony.transmitpower;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 
-import android.telephony.TelephonyManager;
-
+import com.sony.opentelephony.hookmediator.IHooks;
 import com.sony.transmitpower.util.OemPowerConsts;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+//import java.nio.ByteBuffer;
+//import java.nio.ByteOrder;
+//import java.nio.charset.StandardCharsets;
 
 public final class Transmitter {
     private static final boolean DEBUG = false;
     private static final String TAG = Transmitter.class.getCanonicalName();
+    private CompletableFuture<IHooks> mHooks = new CompletableFuture<IHooks>();
 
-    public static void transmitPower(final int key, final int value) {
+    public void transmitPower(final int key, final int value) {
         if (DEBUG) Log.d(TAG, "setting key: " + key + ", value: " + value);
 
         if (!validate(key, value)) {
             return;
         }
 
-        final TelephonyManager telephonyManager = TelephonyManager.getDefault();
-        if (telephonyManager == null)
-            throw new IllegalStateException("No default telephonyManager");
-
-        ByteBuffer buf = ByteBuffer.allocate(OemPowerConsts.HEADER_SIZE
-                                             + OemPowerConsts.INT_SIZE
-                                             + OemPowerConsts.INT_SIZE);
-        buf.order(ByteOrder.nativeOrder());
-
-        try {
-            buf.put(OemPowerConsts.OEM_IDENTIFIER
-                    .getBytes(OemPowerConsts.ENCODING_USASCII));
-        } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "Encoding not supported: " + e);
-            return;
+        if (mHooks == null) {
+            throw new RuntimeException("IHooks service disappeared!");
         }
 
-        // Add Request ID
-        buf.putInt(OemPowerConsts.OEMHOOK_EVT_HOOK_SET_TRANSMIT_POWER);
-        // Add Request payload
-        buf.putInt(OemPowerConsts.INT_SIZE);
-        buf.putInt(key);
-        buf.putInt(value);
+        IHooks hooks = null;
+        try {
+            hooks = mHooks.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-        // tm calls this through on the ITelephony service
-        byte[] resp = new byte[1024];
-        int ret = telephonyManager.invokeOemRilRequestRaw(buf.array(), resp);
-        if (ret < 0)
-            throw new IllegalArgumentException("invokeOemRilRequestRaw failed with rc = " + ret);
+        try {
+            hooks.setTransmitPower(key, value);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        // TODO: Decide whether to use the below codepath
+        // or have hook-specific functionality in HookMediator
+
+        // byte[] request = new byte[OemPowerConsts.HEADER_SIZE +
+        // OemPowerConsts.INT_SIZE
+        // + OemPowerConsts.INT_SIZE];
+        // ByteBuffer buf = ByteBuffer.wrap(request);
+        // buf.order(ByteOrder.nativeOrder());
+
+        // buf.put(OemPowerConsts.OEM_IDENTIFIER.getBytes(StandardCharsets.US_ASCII));
+
+        // // Add Request ID
+        // buf.putInt(OemPowerConsts.OEMHOOK_EVT_HOOK_SET_TRANSMIT_POWER);
+        // // Add Request payload
+        // buf.putInt(OemPowerConsts.INT_SIZE);
+        // buf.putInt(key);
+        // buf.putInt(value);
+
+        // hooks.sendCommand(request);
     }
 
     private static boolean validate(final int key, final int value) {
-        switch(key) {
+        switch (key) {
             case OemPowerConsts.BATTERY_EXT:
             case OemPowerConsts.VOICECALL_EXT:
             case OemPowerConsts.PSENSOR_EXT:
@@ -70,7 +86,7 @@ public final class Transmitter {
                 return false;
         }
 
-        switch(value) {
+        switch (value) {
             case OemPowerConsts.BATTERY_EXT:
             case OemPowerConsts.VOICECALL_EXT:
             case OemPowerConsts.PSENSOR_EXT:
@@ -87,7 +103,27 @@ public final class Transmitter {
         return true;
     }
 
-    private Transmitter() {
-        // intentionally empty
+    public Transmitter(Context context) {
+        final Intent intent = new Intent();
+        final String pkg = IHooks.class.getPackage().getName();
+        intent.setClassName(pkg, pkg + ".HookMediatorService");
+        ServiceConnection connection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                IHooks hooks = IHooks.Stub.asInterface(service);
+                if (mHooks == null) {
+                    mHooks = CompletableFuture.completedFuture(hooks);
+                } else {
+                    mHooks.complete(hooks);
+                }
+            }
+
+            public void onServiceDisconnected(ComponentName className) {
+                // TODO: Try to reconnect?
+                mHooks = null;
+            }
+        };
+        if (!context.bindService(intent, connection, Context.BIND_AUTO_CREATE)) {
+            throw new RuntimeException("Failed to bind IHooks service!");
+        }
     }
 }
