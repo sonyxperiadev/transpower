@@ -20,10 +20,6 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     libpower \
     libprox
 
-ifneq ($(call math_gt_or_eq, $(PLATFORM_SDK_VERSION), 28),)
-    LOCAL_JAVA_LIBRARIES += telephony-common
-endif
-
 LOCAL_AAPT_FLAGS := --auto-add-overlay
 
 # proguard:
