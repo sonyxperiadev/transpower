@@ -13,11 +13,10 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
-import com.google.android.collect.Sets;
-
 import com.sony.transmitpower.util.Util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +30,7 @@ public final class TelephonyStateObserver {
 
     private TelephonyManager mTelephonyManager;
     private SubscriptionManager mSubscriptionManager;
-    private final Set<Listener> mListeners = Sets.newHashSet();
+    private final Set<Listener> mListeners = new HashSet();
     private final List<PhoneStateListenerImpl> mPhoneStateListeners =
             new ArrayList<>();
 

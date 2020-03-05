@@ -11,11 +11,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.google.android.collect.Sets;
-
 import com.sony.transmitpower.sensor.util.Vector;
 import com.sony.transmitpower.util.Util;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -42,7 +41,7 @@ public final class Accelerometer
     private int mSampleCount = 0;
     private Vector mRunningSum = new Vector(0.0f, 0.0f, 0.0f);
 
-    private final Set<Listener> mListeners = Sets.newHashSet();
+    private final Set<Listener> mListeners = new HashSet();
 
     public interface Listener {
         void onMotionStateChanged(boolean isStable);

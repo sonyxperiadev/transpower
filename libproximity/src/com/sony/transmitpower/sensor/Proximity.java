@@ -9,10 +9,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
-import com.google.android.collect.Sets;
-
 import com.sony.transmitpower.util.Util;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,7 +24,7 @@ public final class Proximity
         implements SensorEventListener {
     private static final String TAG = Proximity.class.getCanonicalName();
 
-    private final Set<Listener> mListeners = Sets.newHashSet();
+    private final Set<Listener> mListeners = new HashSet();
 
     public interface Listener {
         void onProximityStateChanged(boolean isNear);
