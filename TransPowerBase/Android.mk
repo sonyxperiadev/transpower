@@ -17,8 +17,8 @@ LOCAL_RESOURCE_DIR := \
 
 LOCAL_JAVA_LIBRARIES += telephony-common
 LOCAL_STATIC_ANDROID_LIBRARIES += \
-    android-support-v4 \
-    androidx.annotation_annotation
+    androidx.annotation_annotation \
+    androidx.localbroadcastmanager_localbroadcastmanager
 LOCAL_STATIC_JAVA_LIBRARIES += \
     libpower
 
