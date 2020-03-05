@@ -14,6 +14,6 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src)
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.annotation_annotation \
     androidx.localbroadcastmanager_localbroadcastmanager
-LOCAL_STATIC_JAVA_LIBRARIES := libpower
+LOCAL_STATIC_JAVA_LIBRARIES := transpower_libpower
 
 include $(BUILD_STATIC_JAVA_LIBRARY)

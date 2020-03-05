@@ -17,7 +17,7 @@ res_dirs := \
 LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dirs))
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    libpower \
+    transpower_libpower \
     libprox
 
 LOCAL_AAPT_FLAGS := --auto-add-overlay
