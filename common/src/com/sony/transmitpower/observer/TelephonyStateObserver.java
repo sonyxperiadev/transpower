@@ -4,7 +4,7 @@
  */
 package com.sony.transmitpower.observer;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.content.Context;
 import android.media.AudioManager;
 import android.telephony.PhoneStateListener;

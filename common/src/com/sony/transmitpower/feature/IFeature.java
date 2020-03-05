@@ -4,7 +4,7 @@
  */
 package com.sony.transmitpower.feature;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.content.Context;
 
 /**
