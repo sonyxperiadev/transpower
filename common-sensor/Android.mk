@@ -12,7 +12,7 @@ LOCAL_PROPRIETARY_MODULE := true
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    libpower \
+    transpower_libpower \
     TransPowerCommon
 
 include $(BUILD_STATIC_JAVA_LIBRARY)
