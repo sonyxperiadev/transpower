@@ -16,8 +16,10 @@ LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/../common/res
 
 LOCAL_JAVA_LIBRARIES += telephony-common
-LOCAL_STATIC_JAVA_LIBRARIES += \
+LOCAL_STATIC_ANDROID_LIBRARIES += \
     android-support-v4 \
+    androidx.annotation_annotation
+LOCAL_STATIC_JAVA_LIBRARIES += \
     libpower
 
 # proguard:
