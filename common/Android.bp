@@ -1,0 +1,17 @@
+// Licensed under the LICENSE.
+// Copyright 2017, Sony Mobile Communications Inc.
+
+java_library {
+    name: "TransPowerCommon",
+
+    platform_apis: true,
+    proprietary: true,
+
+    srcs: ["src/**/*.java"],
+
+    static_libs: [
+        "androidx.annotation_annotation",
+        "androidx.localbroadcastmanager_localbroadcastmanager",
+        "transpower_libpower",
+    ],
+}
