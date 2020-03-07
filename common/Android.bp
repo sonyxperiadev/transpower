@@ -14,4 +14,19 @@ java_library {
         "androidx.localbroadcastmanager_localbroadcastmanager",
         "transpower_libpower",
     ],
+
+    optimize: {
+        proguard_flags_files: ["proguard.flags"],
+    },
+}
+
+android_library {
+    name: "TransPowerCommon_res",
+
+    platform_apis: true,
+    proprietary: true,
+
+    resource_dirs: ["res"],
+
+    static_libs: ["TransPowerCommon"],
 }
