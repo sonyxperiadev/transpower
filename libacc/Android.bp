@@ -1,0 +1,13 @@
+// Licensed under the LICENSE.
+// Copyright 2017, Sony Mobile Communications Inc.
+
+android_library {
+    name: "transpower_libacc",
+
+    proprietary: true,
+
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+
+    static_libs: ["TransPowerCommonSensor"],
+}
