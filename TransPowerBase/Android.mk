@@ -15,9 +15,10 @@ LOCAL_SRC_FILES := $(call all-java-files-under, ../common/src)
 LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/../common/res
 
-LOCAL_JAVA_LIBRARIES += telephony-common
+LOCAL_STATIC_ANDROID_LIBRARIES += \
+    androidx.annotation_annotation \
+    androidx.localbroadcastmanager_localbroadcastmanager
 LOCAL_STATIC_JAVA_LIBRARIES += \
-    android-support-v4 \
     libpower
 
 # proguard:
