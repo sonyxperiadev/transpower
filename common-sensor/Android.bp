@@ -1,0 +1,16 @@
+// Licensed under the LICENSE.
+// Copyright 2017, Sony Mobile Communications Inc.
+
+java_library {
+    name: "TransPowerCommonSensor",
+
+    platform_apis: true,
+    proprietary: true,
+
+    srcs: ["src/**/*.java"],
+
+    static_libs: [
+        "transpower_libpower",
+        "TransPowerCommon",
+    ],
+}

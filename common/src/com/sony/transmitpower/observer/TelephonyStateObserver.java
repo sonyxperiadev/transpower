@@ -4,7 +4,7 @@
  */
 package com.sony.transmitpower.observer;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.content.Context;
 import android.media.AudioManager;
 import android.telephony.PhoneStateListener;
@@ -13,11 +13,10 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
-import com.google.android.collect.Sets;
-
 import com.sony.transmitpower.util.Util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +30,7 @@ public final class TelephonyStateObserver {
 
     private TelephonyManager mTelephonyManager;
     private SubscriptionManager mSubscriptionManager;
-    private final Set<Listener> mListeners = Sets.newHashSet();
+    private final Set<Listener> mListeners = new HashSet();
     private final List<PhoneStateListenerImpl> mPhoneStateListeners =
             new ArrayList<>();
 
@@ -49,7 +48,7 @@ public final class TelephonyStateObserver {
             throw new IllegalArgumentException("null context supplied.");
         }
 
-        mTelephonyManager = TelephonyManager.from(context);
+        mTelephonyManager = context.getSystemService(TelephonyManager.class);
         mSubscriptionManager = SubscriptionManager.from(context);
         mSubscriptionManager.addOnSubscriptionsChangedListener(mSubscriptionListener);
     }
@@ -93,7 +92,7 @@ public final class TelephonyStateObserver {
             throw new IllegalArgumentException("null context supplied");
         }
 
-        final TelephonyManager tm = TelephonyManager.from(context);
+        final TelephonyManager tm = context.getSystemService(TelephonyManager.class);
         if (tm == null) {
             throw new IllegalStateException("TelephonyManager is null");
         }
@@ -108,10 +107,12 @@ public final class TelephonyStateObserver {
     private final class PhoneStateListenerImpl extends PhoneStateListener {
         // Keep track of the relevant manager (bound to subId) for deregistration purposes.
         private final TelephonyManager mTelephonyManager;
+        private final int mSubId;
 
-        PhoneStateListenerImpl(TelephonyManager manager) {
+        PhoneStateListenerImpl(TelephonyManager manager, int subId) {
             super();
             mTelephonyManager = manager;
+            mSubId = subId;
         }
 
         void listen(int events) {
@@ -165,7 +166,9 @@ public final class TelephonyStateObserver {
                             .getActiveSubscriptionInfoList();
                     if (subInfos == null || subInfos.isEmpty()) {
                         // Create a listener for the default telephony manager:
-                        mPhoneStateListeners.add(new PhoneStateListenerImpl(mTelephonyManager));
+                        mPhoneStateListeners.add(
+                            new PhoneStateListenerImpl(mTelephonyManager,
+                                SubscriptionManager.DEFAULT_SUBSCRIPTION_ID));
 
                         if (Util.DEBUG) {
                             Util.logd(TAG,
@@ -177,7 +180,8 @@ public final class TelephonyStateObserver {
                             final int subId = info.getSubscriptionId();
                             final TelephonyManager managerForSubId
                                     = mTelephonyManager.createForSubscriptionId(subId);
-                            mPhoneStateListeners.add(new PhoneStateListenerImpl(managerForSubId));
+                            mPhoneStateListeners.add(
+                                new PhoneStateListenerImpl(managerForSubId, subId));
 
                             if (Util.DEBUG) {
                                 Util.logd(TAG, "onSubscriptionsChanged() : subId = "

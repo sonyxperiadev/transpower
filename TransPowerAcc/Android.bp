@@ -1,0 +1,30 @@
+// Licensed under the LICENSE.
+// Copyright 2017, Sony Mobile Communications Inc.
+
+android_app {
+    name: "TransPowerAcc",
+    certificate: "platform",
+    privileged: true,
+
+    platform_apis: true,
+    proprietary: true,
+
+    srcs: ["src/**/*.java"],
+
+    static_libs: [
+        "transpower_libacc",
+        "transpower_libpower",
+        "TransPowerCommon_res",
+        "TransPowerCommon",
+    ],
+
+    aaptflags: ["--auto-add-overlay"],
+
+    // note that proguard.flags MUST contain proguard flags
+    // from the common library
+    optimize: {
+        proguard_flags_files: [
+            "proguard.flags",
+        ],
+    },
+}
