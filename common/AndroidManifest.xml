@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Licensed under the LICENSE.
+    Copyright 2017, Sony Mobile Communications Inc.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sony.transmitpower">
+</manifest>

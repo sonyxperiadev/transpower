@@ -1,0 +1,13 @@
+// Licensed under the LICENSE.
+// Copyright 2018, Sony Mobile Communications Inc.
+
+java_library {
+    name: "transpower_libpower",
+
+    sdk_version: "system_current",
+    proprietary: true,
+
+    srcs: ["src/**/*.java"],
+
+    static_libs: ["HookMediator_aidl-java"],
+}

@@ -4,12 +4,12 @@
  */
 package com.sony.transmitpower.observer;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.sony.transmitpower.Transmitter;
 import com.sony.transmitpower.feature.IFeature;
@@ -46,6 +46,7 @@ public final class ObserverMediator {
     private final ScreenObserver mScreenObserver = new ScreenObserver();
     private final List<PowerObserverBase> mPowerObservers = new ArrayList<>();
     private final List<IFeature> mFeatures = new ArrayList<>();
+    private Transmitter transmitter = null;
 
     private final BroadcastReceiver mTransmitPowerStateReceiver = new BroadcastReceiver() {
         @Override
@@ -67,7 +68,7 @@ public final class ObserverMediator {
                           OemPowerConsts.INVALID_KEY);
             final int value = intent.getIntExtra(PowerObserverBase.TRANSMIT_POWER_VALUE,
                           OemPowerConsts.INVALID_VALUE);
-            Transmitter.transmitPower(key, value);
+            transmitter.transmitPower(key, value);
         }
     };
 
@@ -99,6 +100,8 @@ public final class ObserverMediator {
         if (context == null) {
             throw new IllegalArgumentException("null context supplied");
         }
+
+        transmitter = new Transmitter(context);
 
         // Register broadcast intent for transmit power
         final IntentFilter intentFilter =

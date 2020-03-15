@@ -25,7 +25,6 @@ public final class OemPowerConsts {
     public static final int OEMHOOK_BASE = 0x80000;
     public static final int OEMHOOK_EVT_HOOK_SET_TRANSMIT_POWER = OEMHOOK_BASE + 201;
     public static final String OEM_IDENTIFIER = "QOEMHOOK";
-    public static final String ENCODING_USASCII = "US-ASCII";
     public static final int INT_SIZE = 4;
     public static final int HEADER_SIZE = OEM_IDENTIFIER.length() + 2 * INT_SIZE;
 }

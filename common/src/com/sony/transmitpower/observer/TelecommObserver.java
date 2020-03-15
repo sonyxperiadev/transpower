@@ -4,18 +4,17 @@
  */
 package com.sony.transmitpower.observer;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
-
-import com.google.android.collect.Sets;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.sony.transmitpower.service.InCallObserverService;
 import com.sony.transmitpower.util.Util;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,7 +26,7 @@ import java.util.Set;
 public final class TelecommObserver extends BroadcastReceiver {
     private static final String TAG = TelecommObserver.class.getCanonicalName();
 
-    private final Set<Listener> mListeners = Sets.newHashSet();
+    private final Set<Listener> mListeners = new HashSet();
     private boolean mIsCallActive = false;
     private boolean mIsBuiltinSpeaker = false;
 

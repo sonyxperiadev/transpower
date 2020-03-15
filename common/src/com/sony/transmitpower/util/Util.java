@@ -4,8 +4,8 @@
  */
 package com.sony.transmitpower.util;
 
-import android.annotation.NonNull;
-import android.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
