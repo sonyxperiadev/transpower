@@ -4,7 +4,7 @@
  */
 package com.sony.transmitpower.sensor.util;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public final class Vector {
     public float x;

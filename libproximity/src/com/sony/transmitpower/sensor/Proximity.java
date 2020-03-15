@@ -4,7 +4,7 @@
  */
 package com.sony.transmitpower.sensor;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;

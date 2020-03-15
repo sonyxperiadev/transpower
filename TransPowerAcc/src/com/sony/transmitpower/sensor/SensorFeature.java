@@ -4,7 +4,7 @@
  */
 package com.sony.transmitpower.sensor;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.content.Context;
 
 import com.sony.transmitpower.feature.IFeature;
@@ -69,4 +69,3 @@ public final class SensorFeature implements IFeature {
         mAccelerometer.clean();
     }
 }
-

@@ -4,7 +4,7 @@
  */
 package com.sony.transmitpower.sensor.observer;
 
-import android.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.content.Context;
 import android.telephony.ServiceState;
 
