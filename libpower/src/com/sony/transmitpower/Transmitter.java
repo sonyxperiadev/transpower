@@ -53,7 +53,7 @@ public final class Transmitter {
         byte[] resp = new byte[1024];
         int ret = telephonyManager.invokeOemRilRequestRaw(buf.array(), resp);
         if (ret < 0)
-            throw new IllegalArgumentException("invokeOemRilRequestRaw failed with rc = " + ret);
+            Log.e(TAG, "invokeOemRilRequestRaw SET_TRANSMIT_POWER failed with rc = " + ret);
     }
 
     private static boolean validate(final int key, final int value) {
