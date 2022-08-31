@@ -7,7 +7,7 @@ android_app {
     privileged: true,
 
     platform_apis: true,
-    proprietary: true,
+    system_ext_specific: true,
 
     static_libs: [
         "androidx.annotation_annotation",

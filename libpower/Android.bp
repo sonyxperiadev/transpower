@@ -5,7 +5,7 @@ java_library {
     name: "transpower_libpower",
 
     platform_apis: true,
-    proprietary: true,
+    system_ext_specific: true,
 
     srcs: ["src/**/*.java"],
 }

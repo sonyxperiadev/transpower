@@ -4,7 +4,7 @@
 java_library {
     name: "transpower_libprox",
 
-    proprietary: true,
+    system_ext_specific: true,
 
     srcs: ["src/**/*.java"],
 

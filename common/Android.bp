@@ -5,7 +5,7 @@ java_library {
     name: "TransPowerCommon",
 
     platform_apis: true,
-    proprietary: true,
+    system_ext_specific: true,
 
     srcs: ["src/**/*.java"],
 
@@ -24,7 +24,7 @@ android_library {
     name: "TransPowerCommon_res",
 
     platform_apis: true,
-    proprietary: true,
+    system_ext_specific: true,
 
     resource_dirs: ["res"],
 
