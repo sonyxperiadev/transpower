@@ -30,3 +30,11 @@ android_library {
 
     static_libs: ["TransPowerCommon"],
 }
+
+prebuilt_etc {
+
+    name: "privapp-permissions-transmitpower.xml",
+    src: "privapp-permissions-transmitpower.xml",
+    system_ext_specific: true,
+    sub_dir: "permissions",
+}
