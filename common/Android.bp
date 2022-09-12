@@ -9,6 +9,8 @@ java_library {
 
     srcs: ["src/**/*.java"],
 
+    required: ["privapp-permissions-transmitpower"],
+
     static_libs: [
         "androidx.annotation_annotation",
         "androidx.localbroadcastmanager_localbroadcastmanager",
@@ -32,8 +34,7 @@ android_library {
 }
 
 prebuilt_etc {
-
-    name: "privapp-permissions-transmitpower.xml",
+    name: "privapp-permissions-transmitpower",
     src: "privapp-permissions-transmitpower.xml",
     system_ext_specific: true,
     sub_dir: "permissions",
