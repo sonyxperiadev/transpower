@@ -20,6 +20,8 @@ android_app {
 
     aaptflags: ["--auto-add-overlay"],
 
+    required: ["privapp-permissions-transmitpower"],
+
     optimize: {
         proguard_flags_files: [
             "proguard.flags",

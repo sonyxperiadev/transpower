@@ -32,9 +32,9 @@ android_library {
 }
 
 prebuilt_etc {
-
-    name: "privapp-permissions-transmitpower.xml",
+    name: "privapp-permissions-transmitpower",
     src: "privapp-permissions-transmitpower.xml",
     system_ext_specific: true,
     sub_dir: "permissions",
+    filename_from_src: true,
 }
